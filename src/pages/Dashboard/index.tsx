@@ -1,5 +1,6 @@
-import React, { useState, FormEvent } from 'react';
+import React, { useState, FormEvent, useEffect } from 'react';
 import { FiChevronRight } from 'react-icons/fi';
+import { DebounceInput } from 'react-debounce-input';
 
 import { Title, Form, Repositories, Error } from './styles';
 
@@ -19,29 +20,50 @@ interface Repository {
   };
 }
 
+interface Repos {
+  name: string;
+  id: string;
+}
+
 const Dashboard: React.FC = () => {
-  const [newRepo, setNewRepo] = useState('');
+  const [newAutor, setNewAutor] = useState('');
+  const [newRepo, setNewRepo] = useState('select');
+  const [allRepo, setAllRepo] = useState<Repos[]>([]);
   const [inputError, setInputError] = useState('');
   const [repositories, setRepositories] = useState<Repository[]>([]);
+
+  useEffect(() => {
+    api.get(`/users/${newAutor}/repos`).then((res) => {
+      const response = res.data;
+
+      setAllRepo(response);
+    });
+  }, [newAutor]);
 
   async function handleAddRepository(
     e: FormEvent<HTMLFormElement>,
   ): Promise<void> {
     e.preventDefault();
 
-    if (!newRepo) {
+    if (!newAutor) {
       setInputError('Digite o autor/nome do reposiotório');
       return;
     }
 
     try {
-      const response = await api.get<Repository>(`/repos/${newRepo}`);
+      const response = await api.get<Repository>(
+        `/repos/${newAutor}/${newRepo}`,
+      );
 
       const repository = response.data;
 
       setRepositories([...repositories, repository]);
 
-      setNewRepo('');
+      setNewAutor('');
+
+      setNewRepo('select');
+
+      setAllRepo([]);
 
       setInputError('');
     } catch (err) {
@@ -53,11 +75,21 @@ const Dashboard: React.FC = () => {
       <img src={logo} alt="Github Explorer" />
       <Title>Explore repositórios no Github</Title>
       <Form hasError={!!inputError} onSubmit={handleAddRepository}>
-        <input
-          placeholder="Digite o nome do repositório"
-          value={newRepo}
-          onChange={(e) => setNewRepo(e.target.value)}
+        <DebounceInput
+          minLength={2}
+          debounceTimeout={500}
+          placeholder="Nome do usuário"
+          value={newAutor}
+          onChange={(e) => setNewAutor(e.target.value)}
         />
+        <select onChange={(e) => setNewRepo(e.target.value)} value={newRepo}>
+          <option value="select">Nome do repositório</option>
+          {allRepo.map((repo) => (
+            <option key={repo.id} value={repo.name}>
+              {repo.name}
+            </option>
+          ))}
+        </select>
         <button type="submit">Pesquisar</button>
       </Form>
       {inputError && <Error>{inputError}</Error>}

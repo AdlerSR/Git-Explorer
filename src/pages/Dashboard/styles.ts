@@ -23,7 +23,7 @@ export const Form = styled.form<FormProps>`
     height: 70px;
     border: 0;
     padding: 0 24px;
-    border-radius: 5px 0 0 5px;
+    border-radius: 5px;
     color: #a8a8b3;
     border: solid 2px #222129;
     background: #222129;
@@ -45,7 +45,7 @@ export const Form = styled.form<FormProps>`
     height: 70px;
     background: #05b353;
     border-color: solid 2px #05b353;
-    border-radius: 0 5px 5px 0;
+    border-radius: 5px;
     border: 0;
     color: #fff;
     font-weight: bold;
@@ -62,6 +62,39 @@ export const Form = styled.form<FormProps>`
         :hover {
           background: ${shade(0.2, '#c53030')};
         }
+      `}
+  }
+
+  select {
+    width: 200px;
+    border-radius: 5px;
+    border: solid 2px #222129;
+    background: #222129;
+    color: #a8a8b3;
+    font-size: 16px;
+    padding: 0px 5px;
+    margin-left: 5px;
+    margin-right: 5px;
+    flex: 1;
+
+    &:after {
+      position: absolute;
+      content: '';
+      top: 24px;
+      right: 10px;
+      width: 0;
+      height: 0;
+      border: 6px solid transparent;
+      background: #222129;
+      border-color: #fff transparent transparent transparent;
+    }
+
+    ${(props) =>
+      props.hasError &&
+      css`
+        border-color: #c53030;
+        border-right: 0;
+        border-left: 0;
       `}
   }
 `;
