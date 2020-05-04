@@ -33,11 +33,13 @@ const Dashboard: React.FC = () => {
   const [repositories, setRepositories] = useState<Repository[]>([]);
 
   useEffect(() => {
-    api.get(`/users/${newAutor}/repos`).then((res) => {
-      const response = res.data;
+    if (newAutor) {
+      api.get(`/users/${newAutor}/repos`).then((res) => {
+        const response = res.data;
 
-      setAllRepo(response);
-    });
+        setAllRepo(response);
+      });
+    }
   }, [newAutor]);
 
   async function handleAddRepository(

@@ -65,6 +65,7 @@ export const Form = styled.form<FormProps>`
   }
 
   select {
+    appearance: none;
     width: 200px;
     border-radius: 5px;
     border: solid 2px #222129;
@@ -86,6 +87,18 @@ export const Form = styled.form<FormProps>`
       border: 6px solid transparent;
       background: #222129;
       border-color: #fff transparent transparent transparent;
+    }
+
+    :active {
+      outline: none;
+    }
+
+    option {
+      border: 0;
+      background: #222129;
+      &:checked {
+        background: #222129;
+      }
     }
 
     ${(props) =>
