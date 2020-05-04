@@ -32,7 +32,6 @@ export const Form = styled.form<FormProps>`
       props.hasError &&
       css`
         border-color: #c53030;
-        border-right: 0;
       `}
 
     &::placeholder {
@@ -93,8 +92,6 @@ export const Form = styled.form<FormProps>`
       props.hasError &&
       css`
         border-color: #c53030;
-        border-right: 0;
-        border-left: 0;
       `}
   }
 `;

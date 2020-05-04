@@ -46,7 +46,7 @@ const Dashboard: React.FC = () => {
     e.preventDefault();
 
     if (!newAutor) {
-      setInputError('Digite o autor/nome do reposiotório');
+      setInputError('Digite o usuário e selecione o repositório');
       return;
     }
 
