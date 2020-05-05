@@ -1,5 +1,5 @@
 import React, { useState, FormEvent, useEffect } from 'react';
-import { FiChevronRight } from 'react-icons/fi';
+import { FiChevronRight, FiTrash } from 'react-icons/fi';
 import { DebounceInput } from 'react-debounce-input';
 
 import { Title, Form, Repositories, Error } from './styles';
@@ -20,56 +20,85 @@ interface Repository {
   };
 }
 
-interface Repos {
+interface AllRepositories {
   name: string;
   id: string;
 }
 
 const Dashboard: React.FC = () => {
-  const [newAutor, setNewAutor] = useState('');
-  const [newRepo, setNewRepo] = useState('select');
-  const [allRepo, setAllRepo] = useState<Repos[]>([]);
+  const [authorInput, setAuthorInput] = useState('');
+  const [repositoryInput, setRepositoryInput] = useState('select');
+  const [allRepo, setAllRepo] = useState<AllRepositories[]>([]);
   const [inputError, setInputError] = useState('');
-  const [repositories, setRepositories] = useState<Repository[]>([]);
+  const [repositories, setRepositories] = useState<Repository[]>(() => {
+    const storageRepositories = localStorage.getItem(
+      '@GithubExplorer:repositories',
+    );
+
+    if (storageRepositories) {
+      return JSON.parse(storageRepositories);
+    }
+    return [];
+  });
 
   useEffect(() => {
-    if (newAutor) {
-      api.get(`/users/${newAutor}/repos`).then((res) => {
+    localStorage.setItem(
+      '@GithubExplorer:repositories',
+      JSON.stringify(repositories),
+    );
+
+    if (authorInput) {
+      api.get<AllRepositories[]>(`/users/${authorInput}/repos`).then((res) => {
         const response = res.data;
 
         setAllRepo(response);
       });
     }
-  }, [newAutor]);
+  }, [authorInput, repositories]);
 
   async function handleAddRepository(
     e: FormEvent<HTMLFormElement>,
   ): Promise<void> {
     e.preventDefault();
 
-    if (!newAutor) {
+    if (!authorInput || !repositoryInput || repositoryInput === 'select') {
       setInputError('Digite o usuário e selecione o repositório');
       return;
     }
 
     try {
       const response = await api.get<Repository>(
-        `/repos/${newAutor}/${newRepo}`,
+        `/repos/${authorInput}/${repositoryInput}`,
       );
 
       const repository = response.data;
 
       setRepositories([...repositories, repository]);
 
-      setNewAutor('');
+      setAuthorInput('');
 
-      setNewRepo('select');
+      setRepositoryInput('select');
 
       setAllRepo([]);
 
       setInputError('');
     } catch (err) {
       setInputError('Erro na busca por esse repositório');
+    }
+  }
+
+  function deleteRepository(id: string): any {
+    const repository = repositories.findIndex((repo) => repo.id === id);
+
+    if (repository >= 0) {
+      repositories.splice(repository, 1);
+
+      localStorage.setItem(
+        '@GithubExplorer:repositories',
+        JSON.stringify(repositories),
+      );
+
+      setRepositories(repositories.filter((repo) => repo.id !== id));
     }
   }
   return (
@@ -81,10 +110,13 @@ const Dashboard: React.FC = () => {
           minLength={2}
           debounceTimeout={500}
           placeholder="Nome do usuário"
-          value={newAutor}
-          onChange={(e) => setNewAutor(e.target.value)}
+          value={authorInput}
+          onChange={(e) => setAuthorInput(e.target.value)}
         />
-        <select onChange={(e) => setNewRepo(e.target.value)} value={newRepo}>
+        <select
+          onChange={(e) => setRepositoryInput(e.target.value)}
+          value={repositoryInput}
+        >
           <option value="select">Nome do repositório</option>
           {allRepo.map((repo) => (
             <option key={repo.id} value={repo.name}>
@@ -97,21 +129,32 @@ const Dashboard: React.FC = () => {
       {inputError && <Error>{inputError}</Error>}
       <Repositories>
         {repositories.map((repository) => (
-          <a href={repository.html_url} key={repository.id}>
-            <img
-              src={repository.owner.avatar_url}
-              alt={repository.owner.login}
-            />
-            <div>
-              <strong>{repository.full_name}</strong>
-              <p>
-                {!repository.description
-                  ? 'Repository without description'
-                  : repository.description}
-              </p>
-            </div>
-            <FiChevronRight size={20} />
-          </a>
+          <>
+            <span key={repository.id}>
+              <img
+                src={repository.owner.avatar_url}
+                alt={repository.owner.login}
+              />
+              <div>
+                <strong>{repository.full_name}</strong>
+                <p>
+                  {!repository.description
+                    ? 'Repository without description'
+                    : repository.description}
+                </p>
+              </div>
+              <FiChevronRight className="chevronIcon" size={28} />
+              <a href={repository.html_url}>
+                <FiTrash
+                  className="trashIcon"
+                  onClick={() => deleteRepository(repository.id)}
+                  type="button"
+                  size={22}
+                  color="#c53030"
+                />
+              </a>
+            </span>
+          </>
         ))}
       </Repositories>
     </>

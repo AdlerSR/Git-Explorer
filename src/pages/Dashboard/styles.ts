@@ -16,7 +16,12 @@ export const Title = styled.h1`
 export const Form = styled.form<FormProps>`
   margin-top: 40px;
   max-width: 700px;
-  display: flex;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+
+  @media (max-width: 746px) {
+    grid-template-columns: 1fr;
+  }
 
   input {
     flex: 1;
@@ -28,15 +33,15 @@ export const Form = styled.form<FormProps>`
     border: solid 2px #222129;
     background: #222129;
 
+    &::placeholder {
+      color: #a8a8b3;
+    }
+
     ${(props) =>
       props.hasError &&
       css`
         border-color: #c53030;
       `}
-
-    &::placeholder {
-      color: #a8a8b3;
-    }
   }
 
   button {
@@ -49,6 +54,11 @@ export const Form = styled.form<FormProps>`
     color: #fff;
     font-weight: bold;
     transition: background-color 0.2s;
+
+    @media (max-width: 746px) {
+      margin-left: 0;
+      margin-top: 10px;
+    }
 
     &:hover {
       background: ${shade(0.2, '#05b353')};
@@ -66,16 +76,23 @@ export const Form = styled.form<FormProps>`
 
   select {
     appearance: none;
-    width: 200px;
+    width: 234px;
     border-radius: 5px;
     border: solid 2px #222129;
     background: #222129;
     color: #a8a8b3;
     font-size: 16px;
-    padding: 0px 5px;
+    padding: 0 24px;
     margin-left: 5px;
     margin-right: 5px;
     flex: 1;
+    height: 70px;
+
+    @media (max-width: 746px) {
+      margin-left: 0;
+      margin-top: 10px;
+      width: 100%;
+    }
 
     &:after {
       position: absolute;
@@ -113,7 +130,7 @@ export const Repositories = styled.div`
   margin-top: 80px;
   max-width: 700px;
 
-  a {
+  span {
     background: #222129;
     border-radius: 5px;
     width: 100%;
@@ -123,8 +140,9 @@ export const Repositories = styled.div`
     display: flex;
     align-items: center;
     transition: transform 0.2s;
+    position: relative;
 
-    & + a {
+    & + span {
       margin-top: 10px;
     }
 
@@ -154,9 +172,17 @@ export const Repositories = styled.div`
       }
     }
 
-    svg {
-      margin-left: auto;
-      color: #cbcbd6;
+    .chevronIcon {
+      position: absolute;
+      top: 15px;
+      right: 15px;
+      color: #15e874;
+    }
+
+    .trashIcon {
+      position: absolute;
+      top: 18px;
+      right: 55px;
     }
   }
 `;
