@@ -143,16 +143,16 @@ const Dashboard: React.FC = () => {
                     : repository.description}
                 </p>
               </div>
-              <FiChevronRight className="chevronIcon" size={28} />
               <a href={repository.html_url}>
-                <FiTrash
-                  className="trashIcon"
-                  onClick={() => deleteRepository(repository.id)}
-                  type="button"
-                  size={22}
-                  color="#c53030"
-                />
+                <FiChevronRight className="chevronIcon" size={28} />
               </a>
+              <FiTrash
+                className="trashIcon"
+                onClick={() => deleteRepository(repository.id)}
+                type="button"
+                size={22}
+                color="#c53030"
+              />
             </span>
           </>
         ))}
