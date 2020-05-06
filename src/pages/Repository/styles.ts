@@ -26,9 +26,9 @@ export const RepositoryInfo = styled.section`
   margin-top: 80px;
 
   .gifLoading {
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    position: absolute;
+    top: 35vh;
+    right: 40vw;
   }
 
   header {
