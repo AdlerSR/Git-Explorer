@@ -8,7 +8,6 @@ import { Title, Form, Repositories, Error } from './styles';
 import api from '../../services/api';
 
 import logo from '../../assets/logo.svg';
-import Repository from '../Repository';
 
 interface Repository {
   id: string;
@@ -50,11 +49,13 @@ const Dashboard: React.FC = () => {
     );
 
     if (authorInput) {
-      api.get<AllRepositories[]>(`/users/${authorInput}/repos`).then((res) => {
-        const response = res.data;
+      api
+        .get<AllRepositories[]>(`/users/${authorInput}/repos?per_page=100 `)
+        .then((res) => {
+          const response = res.data;
 
-        setAllRepo(response);
-      });
+          setAllRepo(response);
+        });
     }
   }, [authorInput, repositories]);
 
@@ -63,7 +64,7 @@ const Dashboard: React.FC = () => {
   ): Promise<void> {
     e.preventDefault();
 
-    if (!authorInput || !repositoryInput || repositoryInput === 'select') {
+    if (!authorInput || repositoryInput === 'select') {
       setInputError('Digite o usuário e selecione o repositório');
       return;
     }
