@@ -46,12 +46,12 @@ export const RepositoryInfo = styled.section`
 
       strong {
         font-size: 36px;
-        color: #fff;
+        color: ${(props) => props.theme.color.text};
       }
 
       p {
         font-size: 18px;
-        color: #fff;
+        color: ${(props) => props.theme.color.text};
         margin-top: 4px;
       }
     }
@@ -68,13 +68,13 @@ export const RepositoryInfo = styled.section`
       strong {
         display: block;
         font-size: 36px;
-        color: white;
+        color: ${(props) => props.theme.color.text};
       }
 
       span {
         display: block;
         margin-top: 4px;
-        color: #fff;
+        color: ${(props) => props.theme.color.text};
       }
     }
   }
@@ -84,7 +84,7 @@ export const Issues = styled.div`
   margin-top: 80px;
 
   span {
-    background: #222129;
+    background: ${(props) => props.theme.color.primary};
     border-radius: 5px;
     width: 100%;
     padding: 24px;
@@ -109,7 +109,7 @@ export const Issues = styled.div`
 
       strong {
         font-size: 20px;
-        color: #fff;
+        color: ${(props) => props.theme.color.text};
       }
 
       p {

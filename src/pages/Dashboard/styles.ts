@@ -38,7 +38,7 @@ const fadeIn = keyframes`
 
 export const Title = styled.h1`
   font-size: 48px;
-  color: #ffffff;
+  color: ${(props) => props.theme.color.text};
   margin-top: 80px;
   max-width: 450px;
   line-height: 56px;
@@ -62,8 +62,8 @@ export const Form = styled.form<FormProps>`
     padding: 0 24px;
     border-radius: 5px;
     color: #a8a8b3;
-    border: solid 2px #222129;
-    background: #222129;
+    border: solid 2px ${(props) => props.theme.color.primary};
+    background: ${(props) => props.theme.color.primary};
 
     &::placeholder {
       color: #a8a8b3;
@@ -110,8 +110,8 @@ export const Form = styled.form<FormProps>`
     appearance: none;
     width: 234px;
     border-radius: 5px;
-    border: solid 2px #222129;
-    background: #222129;
+    border: solid 2px ${(props) => props.theme.color.primary};
+    background: ${(props) => props.theme.color.primary};
     color: #a8a8b3;
     font-size: 16px;
     padding: 0 24px;
@@ -165,7 +165,8 @@ export const Repositories = styled.div`
   span {
     animation: 1s ${toLeft} ease-out;
     animation-fill-mode: backwards;
-    background: #222129;
+    border: solid 2px ${(props) => props.theme.color.primary};
+    background: ${(props) => props.theme.color.primary};
     border-radius: 5px;
     width: 100%;
     padding: 24px;
@@ -219,7 +220,7 @@ export const Repositories = styled.div`
 
       strong {
         font-size: 20px;
-        color: #fff;
+        color: ${(props) => props.theme.color.text};
       }
 
       p {

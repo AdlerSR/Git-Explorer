@@ -11,7 +11,8 @@ export default createGlobalStyle`
   }
 
   body{
-    background: #0B0A0D url(${githubBackground}) 70% top no-repeat;
+    background: ${(props) =>
+      props.theme.color.background} url(${githubBackground}) 70% top no-repeat;
     -webkit-font-smoothing: antialiased;
     overflow-x: hidden;
   }
@@ -35,7 +36,7 @@ export default createGlobalStyle`
   }
 
   ::-webkit-scrollbar-track {
-    background: #0B0A0D;
+    background: ${(props) => props.theme.color.background};
   }
 
   ::-webkit-scrollbar-thumb {
