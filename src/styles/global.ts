@@ -13,6 +13,7 @@ export default createGlobalStyle`
   body{
     background: #0B0A0D url(${githubBackground}) 70% top no-repeat;
     -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
   }
 
   body, input, button, select{
@@ -27,5 +28,22 @@ export default createGlobalStyle`
 
   button, svg {
     cursor: pointer;
+  }
+
+  ::-webkit-scrollbar {
+    width: 10px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: #0B0A0D;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: #222129;
+    border-radius: 5px
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background: #555;
   }
 `;

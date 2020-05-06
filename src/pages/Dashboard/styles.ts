@@ -1,9 +1,40 @@
-import styled, { css } from 'styled-components';
+import styled, { css, keyframes } from 'styled-components';
 import { shade } from 'polished';
 
 interface FormProps {
   hasError: boolean;
 }
+
+const toRight = keyframes`
+  0%{
+    transform: translateX(-60%);
+    opacity: 0;
+  }
+  100%{
+    transform: translateX(0);
+    opacity: 1;
+  }
+`;
+
+const toLeft = keyframes`
+  0%{
+    transform: translateX(60%);
+    opacity: 0;
+  }
+  100%{
+    transform: translateX(0);
+    opacity: 1;
+  }
+`;
+
+const fadeIn = keyframes`
+  0%{
+    opacity: 0;
+  }
+  100%{
+    opacity: 1;
+  }
+`;
 
 export const Title = styled.h1`
   font-size: 48px;
@@ -11,6 +42,7 @@ export const Title = styled.h1`
   margin-top: 80px;
   max-width: 450px;
   line-height: 56px;
+  animation: 2s ${fadeIn} ease-out;
 `;
 
 export const Form = styled.form<FormProps>`
@@ -18,7 +50,7 @@ export const Form = styled.form<FormProps>`
   max-width: 700px;
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
-
+  animation: 1s ${toRight} ease-out;
   @media (max-width: 746px) {
     grid-template-columns: 1fr;
   }
@@ -131,6 +163,8 @@ export const Repositories = styled.div`
   max-width: 700px;
 
   span {
+    animation: 1s ${toLeft} ease-out;
+    animation-fill-mode: backwards;
     background: #222129;
     border-radius: 5px;
     width: 100%;
@@ -141,6 +175,29 @@ export const Repositories = styled.div`
     align-items: center;
     transition: transform 0.2s;
     position: relative;
+    transition: 0.5s;
+
+    &:nth-child(1) {
+      animation-delay: 300ms;
+    }
+    &:nth-child(2) {
+      animation-delay: 400ms;
+    }
+    &:nth-child(3) {
+      animation-delay: 500ms;
+    }
+    &:nth-child(4) {
+      animation-delay: 600ms;
+    }
+    &:nth-child(5) {
+      animation-delay: 700ms;
+    }
+    &:nth-child(6) {
+      animation-delay: 800ms;
+    }
+    &:nth-child(7) {
+      animation-delay: 900ms;
+    }
 
     & + span {
       margin-top: 10px;
