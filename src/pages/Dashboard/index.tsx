@@ -1,4 +1,5 @@
 import React, { useState, FormEvent, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import { FiChevronRight, FiTrash } from 'react-icons/fi';
 import { DebounceInput } from 'react-debounce-input';
 
@@ -87,7 +88,7 @@ const Dashboard: React.FC = () => {
     }
   }
 
-  function deleteRepository(id: string): any {
+  function deleteRepository(id: string): void {
     const repository = repositories.findIndex((repo) => repo.id === id);
 
     if (repository >= 0) {
@@ -111,7 +112,7 @@ const Dashboard: React.FC = () => {
           debounceTimeout={500}
           placeholder="Nome do usuário"
           value={authorInput}
-          onChange={(e) => setAuthorInput(e.target.value)}
+          onChange={(e) => setAuthorInput(e.target.value.split(' ').join(''))}
         />
         <select
           onChange={(e) => setRepositoryInput(e.target.value)}
@@ -129,32 +130,30 @@ const Dashboard: React.FC = () => {
       {inputError && <Error>{inputError}</Error>}
       <Repositories>
         {repositories.map((repository) => (
-          <>
-            <span key={repository.id}>
-              <img
-                src={repository.owner.avatar_url}
-                alt={repository.owner.login}
-              />
-              <div>
-                <strong>{repository.full_name}</strong>
-                <p>
-                  {!repository.description
-                    ? 'Repository without description'
-                    : repository.description}
-                </p>
-              </div>
-              <a href={repository.html_url}>
-                <FiChevronRight className="chevronIcon" size={28} />
-              </a>
-              <FiTrash
-                className="trashIcon"
-                onClick={() => deleteRepository(repository.id)}
-                type="button"
-                size={22}
-                color="#c53030"
-              />
-            </span>
-          </>
+          <span key={repository.id}>
+            <img
+              src={repository.owner.avatar_url}
+              alt={repository.owner.login}
+            />
+            <div>
+              <strong>{repository.full_name}</strong>
+              <p>
+                {!repository.description
+                  ? 'Repository without description'
+                  : repository.description}
+              </p>
+            </div>
+            <Link to={`/repository/${repository.full_name}`}>
+              <FiChevronRight className="chevronIcon" size={28} type="button" />
+            </Link>
+            <FiTrash
+              className="trashIcon"
+              onClick={() => deleteRepository(repository.id)}
+              type="button"
+              size={22}
+              color="#c53030"
+            />
+          </span>
         ))}
       </Repositories>
     </>
