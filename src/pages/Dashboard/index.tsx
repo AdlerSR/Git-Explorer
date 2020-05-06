@@ -12,6 +12,7 @@ import Repository from '../Repository';
 
 interface Repository {
   id: string;
+  name: string;
   html_url: string;
   full_name: string;
   description: string;
@@ -64,6 +65,15 @@ const Dashboard: React.FC = () => {
 
     if (!authorInput || !repositoryInput || repositoryInput === 'select') {
       setInputError('Digite o usuário e selecione o repositório');
+      return;
+    }
+
+    const existRepository = repositories.find(
+      (repository) => repository.name === repositoryInput,
+    );
+
+    if (existRepository) {
+      setInputError('Repositório ja Cadastrado');
       return;
     }
 
