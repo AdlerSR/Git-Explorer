@@ -27,13 +27,18 @@ export const RepositoryInfo = styled.section`
 
   .gifLoading {
     position: absolute;
-    top: 35vh;
-    right: 40vw;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
   }
 
   header {
     display: flex;
     align-items: center;
+
+    @media (max-width: 500px) {
+      flex-direction: column;
+    }
 
     img {
       height: 120px;
@@ -43,24 +48,41 @@ export const RepositoryInfo = styled.section`
 
     div {
       margin-left: 24px;
-
+      @media (max-width: 500px) {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        margin-top: 20px;
+      }
       strong {
         font-size: 36px;
         color: ${(props) => props.theme.color.text};
+
+        @media (max-width: 500px) {
+          font-size: 25px;
+          text-align: center;
+        }
       }
 
       p {
         font-size: 18px;
         color: ${(props) => props.theme.color.text};
         margin-top: 4px;
+
+        @media (max-width: 500px) {
+          margin-top: 10px;
+          text-align: center;
+        }
       }
     }
   }
   ul {
     display: flex;
+    justify-content: center;
     list-style: none;
     margin-top: 40px;
     li {
+      text-align: center;
       & + li {
         margin-left: 80px;
       }

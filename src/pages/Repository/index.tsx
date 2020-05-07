@@ -5,7 +5,6 @@ import { FiChevronLeft, FiChevronRight } from 'react-icons/fi';
 import { Header, RepositoryInfo, Issues } from './styles';
 
 import LogoImg from '../../assets/logo.svg';
-import DefaultImage from '../../assets/default.png';
 import LoadingGif from '../../assets/loading.gif';
 
 import api from '../../services/api';
@@ -73,7 +72,11 @@ const Repository: React.FC = () => {
             <img src={repository.owner.avatar_url} alt="" />
             <div>
               <strong>{repository.full_name}</strong>
-              <p>{repository.description}</p>
+              <p>
+                {!repository.description
+                  ? 'Repository without description'
+                  : repository.description}
+              </p>
             </div>
           </header>
           <ul>

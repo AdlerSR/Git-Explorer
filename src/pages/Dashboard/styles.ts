@@ -178,6 +178,10 @@ export const Repositories = styled.div`
     position: relative;
     transition: 0.5s;
 
+    @media (max-width: 450px) {
+      padding-top: 45px;
+    }
+
     &:nth-child(1) {
       animation-delay: 300ms;
     }

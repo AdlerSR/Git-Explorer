@@ -6,11 +6,11 @@
 </g>
 <defs>
 <linearGradient id="paint0_linear" x1="344" y1="-25.6667" x2="344" y2="633.676" gradientUnits="userSpaceOnUse">
-<stop stop-color="#fff"/>
-<stop offset="1" stop-color="#fff" stop-opacity="0"/>
+<stop stop-color="#55828B"/>
+<stop offset="1" stop-color="#55828B2" stop-opacity="0"/>
 </linearGradient>
 <clipPath id="clip0">
-<rect y="-40" width="688" height="688" fill="white"/>
+<rect y="-40" width="688" height="688" fill="#55828B"/>
 </clipPath>
 </defs>
 </svg>
