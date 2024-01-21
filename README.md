@@ -46,9 +46,6 @@ Fiquei muito feliz com o resultado, pois aprendi outras coisas além do conteúd
 ⚠ **Se não quiser clonar no seu PC, pode acessar o site [por esse link](https://gitexplorer.now.sh)** ⚠ 
 
 
-Antes de começar faça um clone desse repositório no seu computador:
-> git clone https://github.com/adilier/Git-Explorer.git
-
 Entre na pasta do projeto e instale as dependência usando o comando:
 #### Yarn
 > yarn 
